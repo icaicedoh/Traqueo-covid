@@ -1,0 +1,1709 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={01-Analisis Exploratorio},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{01-Analisis Exploratorio}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{echo =} \ConstantTok{TRUE}\NormalTok{)}
+
+\DocumentationTok{\#\#\#\#\# Abrir librerias \#\#\#\#}
+\FunctionTok{library}\NormalTok{(dplyr) }\DocumentationTok{\#\#\# Es una libreria para la gestion de datos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(skimr) }\DocumentationTok{\#\#\# Descripcion de datos continuos}
+\FunctionTok{library}\NormalTok{(janitor) }\DocumentationTok{\#\#\# Descripcion de datos cualitativos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'janitor'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     chisq.test, fisher.test
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl) }\DocumentationTok{\#\#\# Leer el excel de la base de datos}
+\FunctionTok{library}\NormalTok{(ggplot2) }\DocumentationTok{\#\#\# Para hacer dibujos bonitos}
+
+
+\DocumentationTok{\#\#\#\# Cargar la base de datos}
+\NormalTok{traqueo }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"Data/Base Datos TRAQUEO analisis.xlsx"}\NormalTok{, }
+                                          \AttributeTok{sheet =} \StringTok{"Hoja1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
+## Expecting numeric in AF3 / R3C32: got a date
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
+## Expecting numeric in AF6 / R6C32: got a date
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
+## Expecting numeric in AF7 / R7C32: got a date
+\end{verbatim}
+
+\begin{verbatim}
+## New names:
+## * `` -> ...1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Limpiar la base de datos}
+\NormalTok{traqueo }\OtherTok{\textless{}{-}}\NormalTok{ traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Sexo }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{)}
+
+
+\DocumentationTok{\#\#\#\#\# Analisis exploratorio}
+
+\DocumentationTok{\#\#\#\# Variables CUALITATIVAS}
+\DocumentationTok{\#\#\# Se describen como frecuencias absolutas y relativas = n (\%)}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(Sexo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Sexo   n   percent
+##     0  49 0.3288591
+##     1 100 0.6711409
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\# Variables CUANTITATIVAS}
+\DocumentationTok{\#\#\#\# Se describen como media o mediana y desviacion estandar o rango intercuartil }
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(Edad)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Edad & 0 & 1 & 65.06 & 13.15 & 22 & 58 & 66 & 74 & 89 & ▁▂▅▇▅ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#3 Talla}
+\NormalTok{traqueo}\SpecialCharTok{$}\NormalTok{Talla }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\NormalTok{Talla)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(Talla)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Talla & 1 & 0.99 & 165.16 & 8.96 & 144 & 160 & 165 & 172 & 189 &
+▂▆▇▆▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Peso}
+\NormalTok{traqueo}\SpecialCharTok{$}\NormalTok{Peso }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\NormalTok{Peso)}
+
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(Peso)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Peso & 0 & 1 & 80.57 & 19.45 & 45 & 70 & 78 & 85 & 164 & ▃▇▂▁▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Ant. HTA}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Ant. HTA  n   percent
+##         0 70 0.4697987
+##         1 79 0.5302013
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# obesidad}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Ant. Obesidad}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Ant. Obesidad  n     percent
+##              0 98 0.657718121
+##              1 50 0.335570470
+##             NA  1 0.006711409
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Ant. Obesidad}\StringTok{\textasciigrave{}}\NormalTok{[traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Ant. Obesidad}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \StringTok{"NA"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{0}
+\FunctionTok{class}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Ant. Obesidad}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# DM}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Ant. DM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Ant. DM   n   percent
+##        0 102 0.6845638
+##        1  47 0.3154362
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# EPOC}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Ant. EPOC/Asma}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Ant. EPOC/Asma   n    percent
+##               0 141 0.94630872
+##               1   8 0.05369128
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Tabaquismo}
+\NormalTok{traqueo}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(Tabaquismo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Tabaquismo   n    percent
+##           0 137 0.91946309
+##           1  12 0.08053691
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# severidad APACHE}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Grado de severidad}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Grado de severidad & 0 & 1 & 22.13 & 7.7 & 1 & 17 & 23 & 27 & 40 &
+▁▃▇▇▂ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# IMC}
+\NormalTok{traqueo}\SpecialCharTok{$}\NormalTok{IMC }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\NormalTok{IMC)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(IMC)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+IMC & 1 & 0.99 & 12873.86 & 20137.87 & 21.6 & 27.34 & 32.13 & 44014.75 &
+44469 & ▇▁▁▁▃ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#sato2 al ingreso}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{SO2 al ingreso}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+SO2 al ingreso & 0 & 1 & 80.11 & 16.05 & 30 & 70 & 85 & 92 & 99 &
+▁▁▃▅▇ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# sofa en intubacion}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{SOFA día intubación}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}}\FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{SOFA día intubación}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{SOFA día intubación}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+SOFA día intubación & 3 & 0.98 & 7.78 & 3.25 & 1 & 5 & 8 & 10 & 16 &
+▇▇▇▆▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# sofa en traqueo}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{SOFA día traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+SOFA día traqueostomía & 1 & 0.99 & 8.62 & 2.56 & 1 & 7 & 9 & 10 & 18 &
+▁▅▇▂▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# goteo vcasoactivo}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Goteo de vasoactivos}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Goteo de vasoactivos  n   percent
+##                     0 81 0.5436242
+##                     1 68 0.4563758
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# vasoactivos POP}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Vasoactivos POP}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Vasoactivos POP   n   percent
+##                0 100 0.6711409
+##                1  49 0.3288591
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# medicamentos sedacion}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Medicamentos de sedación}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   Medicamentos de sedación  n     percent
+##                                          0  3 0.020134228
+##                                          1  9 0.060402685
+##                                          2 37 0.248322148
+##                                          3 22 0.147651007
+##                                          4  6 0.040268456
+##              4: dexmedetomidina + propofol  2 0.013422819
+##              4: fentanyl + dexmedetomidina  9 0.060402685
+##   4: fentanyl + dexmedetomidina + propofol  3 0.020134228
+##                     4: fentanyl + ketamina  1 0.006711409
+##          4: fentanyl + propofol + ketamina  1 0.006711409
+##                                4: ketamina  5 0.033557047
+##  4: midazolam + dexmedetomidina + fentanyl  1 0.006711409
+##                    4: midazolam + fentanyl 13 0.087248322
+##         4: midazolam + fentanyl + propofol  5 0.033557047
+##                    4: midazolam + propofol  1 0.006711409
+##                                 4: Ninguno  2 0.013422819
+##                     4: propofol + fentanyl 28 0.187919463
+##                4: tiopental + hidromorfona  1 0.006711409
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# aumento de parametros}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Aumento de los parámetros ventilatorios}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Aumento de los parámetros ventilatorios  n     percent valid_percent
+##                                        0 75 0.503355705    0.50675676
+##                                        1 37 0.248322148    0.25000000
+##                                        2 30 0.201342282    0.20270270
+##                                        3  6 0.040268456    0.04054054
+##                                       NA  1 0.006711409            NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# tiempo intub{-}traqueo}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la intubación y la traqueostomía}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la intubación y la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la intubación y la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.43}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.09}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.13}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.06}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.03}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.06}}@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Tiempo entre la intubación y la traqueostomía & 1 & 0.99 & 15.05 & 4.83
+& 0 & 12 & 14 & 17 & 34 & ▁▆▇▁▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# peep previo}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{PEEP previo a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+PEEP previo a la traqueostomía & 0 & 1 & 8.5 & 2.22 & 0 & 8 & 8 & 10 &
+14 & ▁▂▇▇▂ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# peep posterior}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{PEEP posterior a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+PEEP posterior a la traqueostomía & 0 & 1 & 8.72 & 2.07 & 5 & 8 & 8 & 10
+& 14 & ▃▇▇▂▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# so2 previo}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{SO2 previo a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+SO2 previo a la traqueostomía & 0 & 1 & 95.44 & 5.04 & 60 & 94 & 96 & 99
+& 100 & ▁▁▁▁▇ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# so2 posterior}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{SO2 inmediatamente posterior a la traqueostomía}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{SO2 inmediatamente posterior a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{SO2 inmediatamente posterior a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.44}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.09}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.13}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.06}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.03}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.06}}@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+SO2 inmediatamente posterior a la traqueostomía & 0 & 1 & 93.19 & 9.3 &
+42 & 92 & 95 & 98 & 100 & ▁▁▁▁▇ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# tipo de canula}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Tipo de cánula}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Tipo de cánula}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Tipo de cánula}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Tipo de cánula   n     percent valid_percent
+##               0 113 0.758389262     0.7635135
+##               1  35 0.234899329     0.2364865
+##              NA   1 0.006711409            NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#tecnica quirurgica}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Técnica quirúrgica}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Técnica quirúrgica   n     percent
+##                   0 104 0.697986577
+##                   1   1 0.006711409
+##                   2  44 0.295302013
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# calibre canula}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Calibre de la cánula (French)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Calibre de la cánula (French) & 0 & 1 & 893.11 & 6194.12 & 7 & 8 & 8 & 9
+& 43959 & ▇▁▁▁▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# metodo de identificacion traquea}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Método de identificación de la tráquea}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Método de identificación de la tráquea   n percent
+##                                       0 149       1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# complicaciones intraquirurgicas}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Complicaciones intraoperatorias}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Complicaciones intraoperatorias}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Complicaciones intraoperatorias}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Complicaciones intraoperatorias   n     percent valid_percent
+##                                0 140 0.939597315   0.965517241
+##                                2   4 0.026845638   0.027586207
+##                                6   1 0.006711409   0.006896552
+##                               NA   4 0.026845638            NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# pafi dia antes}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{PAFi día anterior a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+character & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: character}
+
+\begin{longtable}[]{@{}lrrrrrrr@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & min & max & empty &
+n\_unique & whitespace \\
+\midrule
+\endhead
+PAFi día anterior a la traqueostomía & 0 & 1 & 2 & 3 & 0 & 110 & 0 \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# pafi dia despues }
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{PAFi día posterior a la traqueostomía}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}}\FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{PAFi día posterior a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{PAFi día posterior a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.36}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.09}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.13}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.07}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.06}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.03}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.07}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.06}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.06}}@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+PAFi día posterior a la traqueostomía & 1 & 0.99 & 183.68 & 79.19 & 56 &
+129.75 & 170.5 & 225 & 447 & ▆▇▃▂▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# pafi 3 dias}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{PAFi a las 72 posteriores a la traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  PAFi a las 72 posteriores a la traqueostomía n     percent
+##                                           100 1 0.006711409
+##                                           101 1 0.006711409
+##                                           103 1 0.006711409
+##                                           105 1 0.006711409
+##                                           106 1 0.006711409
+##                                           108 1 0.006711409
+##                                           110 1 0.006711409
+##                                           114 1 0.006711409
+##                                           116 3 0.020134228
+##                                           117 1 0.006711409
+##                                           119 1 0.006711409
+##                                           124 1 0.006711409
+##                                           125 1 0.006711409
+##                                           128 2 0.013422819
+##                                           132 1 0.006711409
+##                                           133 1 0.006711409
+##                                           134 2 0.013422819
+##                                           135 2 0.013422819
+##                                           139 2 0.013422819
+##                                           140 3 0.020134228
+##                                           143 1 0.006711409
+##                                           144 3 0.020134228
+##                                           145 2 0.013422819
+##                                           147 1 0.006711409
+##                                           148 1 0.006711409
+##                                           152 1 0.006711409
+##                                           153 1 0.006711409
+##                                           154 1 0.006711409
+##                                           155 1 0.006711409
+##                                           159 1 0.006711409
+##                                           164 1 0.006711409
+##                                           166 2 0.013422819
+##                                           167 1 0.006711409
+##                                           168 1 0.006711409
+##                                           169 1 0.006711409
+##                                           170 3 0.020134228
+##                                           174 1 0.006711409
+##                                           175 1 0.006711409
+##                                           181 1 0.006711409
+##                                           183 2 0.013422819
+##                                           184 1 0.006711409
+##                                           185 1 0.006711409
+##                                           186 1 0.006711409
+##                                           189 2 0.013422819
+##                                           190 1 0.006711409
+##                                           191 1 0.006711409
+##                                           193 1 0.006711409
+##                                           194 1 0.006711409
+##                                           195 1 0.006711409
+##                                           197 1 0.006711409
+##                                           198 2 0.013422819
+##                                           199 2 0.013422819
+##                                           201 1 0.006711409
+##                                           202 1 0.006711409
+##                                           204 1 0.006711409
+##                                           205 2 0.013422819
+##                                           206 2 0.013422819
+##                                           207 2 0.013422819
+##                                           208 1 0.006711409
+##                                           213 2 0.013422819
+##                                           218 3 0.020134228
+##                                           220 1 0.006711409
+##                                           228 1 0.006711409
+##                                           229 1 0.006711409
+##                                           230 3 0.020134228
+##                                           233 1 0.006711409
+##                                           234 2 0.013422819
+##                                           235 1 0.006711409
+##                                           236 1 0.006711409
+##                                           237 1 0.006711409
+##                                           240 1 0.006711409
+##                                           241 1 0.006711409
+##                                           243 1 0.006711409
+##                                           246 1 0.006711409
+##                                           248 1 0.006711409
+##                                           250 1 0.006711409
+##                                           252 1 0.006711409
+##                                           253 2 0.013422819
+##                                           267 2 0.013422819
+##                                           274 1 0.006711409
+##                                           276 1 0.006711409
+##                                           279 2 0.013422819
+##                                           280 1 0.006711409
+##                                           291 1 0.006711409
+##                                           299 1 0.006711409
+##                                           300 1 0.006711409
+##                                           317 1 0.006711409
+##                                           318 1 0.006711409
+##                                           320 1 0.006711409
+##                                           330 1 0.006711409
+##                                           333 1 0.006711409
+##                                           336 1 0.006711409
+##                                           363 1 0.006711409
+##                                           364 1 0.006711409
+##                                           392 1 0.006711409
+##                                           409 1 0.006711409
+##                                           420 1 0.006711409
+##                                            48 2 0.013422819
+##                                            57 1 0.006711409
+##                                            60 1 0.006711409
+##                                            63 1 0.006711409
+##                                            65 1 0.006711409
+##                                            67 1 0.006711409
+##                                            72 1 0.006711409
+##                                            74 1 0.006711409
+##                                            76 1 0.006711409
+##                                            78 1 0.006711409
+##                                            86 1 0.006711409
+##                                            89 1 0.006711409
+##                                            93 1 0.006711409
+##                                            94 1 0.006711409
+##                                            95 1 0.006711409
+##                                            96 1 0.006711409
+##                                            98 1 0.006711409
+##                                            NA 4 0.026845638
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# fallece antes retiro ventilador}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Fallece antes de retiro del ventilador}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Fallece antes de retiro del ventilador}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Fallece antes de retiro del ventilador}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Fallece antes de retiro del ventilador  n     percent valid_percent
+##                                       0 95 0.637583893     0.6418919
+##                                       1 53 0.355704698     0.3581081
+##                                      NA  1 0.006711409            NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# aun continua canula}
+\NormalTok{traqueo}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Aún continúa con cánula de traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                           Aún continúa con cánula de traqueostomía  n
+##                                                                  . 59
+##                                                                  0 70
+##                                                                  1 17
+##                                                     1 (14.04.2021)  1
+##                                                      1 al 14.04.21  1
+##  Se desconoce. Se remitio el 29.10.2020 con VMI a otra institucion  1
+##      percent
+##  0.395973154
+##  0.469798658
+##  0.114093960
+##  0.006711409
+##  0.006711409
+##  0.006711409
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# tiempo que continua con canula}
+\NormalTok{traqueo}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo que continúa con la cánula de traqueostomía}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 Tiempo que continúa con la cánula de traqueostomía  n
+##                                                                  . 60
+##                                                                  0 67
+##                                                                  1  1
+##                                                                  2  2
+##                                                                  3  2
+##                                                                  4 14
+##                                                                 NI  1
+##  Se desconoce. Se remitio el 29.10.2020 con VMI a otra institucion  1
+##                                                               <NA>  1
+##      percent valid_percent
+##  0.402684564   0.405405405
+##  0.449664430   0.452702703
+##  0.006711409   0.006756757
+##  0.013422819   0.013513514
+##  0.013422819   0.013513514
+##  0.093959732   0.094594595
+##  0.006711409   0.006756757
+##  0.006711409   0.006756757
+##  0.006711409            NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# fallece antes de decanulacion}
+\NormalTok{traqueo}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Fallece antes de decanulación}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                      Fallece antes de decanulación  n
+##                                                                  0 88
+##                                                                  1 59
+##                                     NA (al 14.04 aun no decanulan)  1
+##  Se desconoce. Se remitio el 29.10.2020 con VMI a otra institucion  1
+##      percent
+##  0.590604027
+##  0.395973154
+##  0.006711409
+##  0.006711409
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# tiempo traqueo{-}retiro ventilador}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la traqueostomía y el retiro del ventilador}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}}\FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la traqueostomía y el retiro del ventilador}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la traqueostomía y el retiro del ventilador}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.48}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.12}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.02}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.03}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.03}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Tiempo entre la traqueostomía y el retiro del ventilador & 55 & 0.63 &
+14.43 & 11.42 & 1 & 6 & 10.5 & 21 & 51 & ▇▃▂▁▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# tiempo traqueostomia{-}decanulacion}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la traqueostomía y la decanulación}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la traqueostomía y la decanulación}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Tiempo entre la traqueostomía y la decanulación}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.42}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.09}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.12}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.03}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.04}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.05}}@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Tiempo entre la traqueostomía y la decanulación & 79 & 0.47 & 38.91 &
+33.97 & 5 & 20.25 & 29 & 42.5 & 190 & ▇▂▁▁▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# complicaciones estancia hospitalaria}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Complicaciones a largo plazo}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Complicaciones a largo plazo   n     percent valid_percent
+##                             0 126 0.845637584   0.851351351
+##                             1   5 0.033557047   0.033783784
+##                          1, 2   1 0.006711409   0.006756757
+##                           1.2   1 0.006711409   0.006756757
+##                           1y2   2 0.013422819   0.013513514
+##                             2   1 0.006711409   0.006756757
+##                         2 y 3   1 0.006711409   0.006756757
+##                             3   3 0.020134228   0.020270270
+##                             5   5 0.033557047   0.033783784
+##                          5, 2   1 0.006711409   0.006756757
+##                             6   1 0.006711409   0.006756757
+##                          Otra   1 0.006711409   0.006756757
+##                          <NA>   1 0.006711409            NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#estancia global}
+\NormalTok{traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Estancia global}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(traqueo}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Estancia global}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Estancia global}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Estancia global & 2 & 0.99 & 48.28 & 23.41 & 14 & 30.5 & 45 & 57 & 137 &
+▆▇▂▂▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#estancia en UCI}
+\NormalTok{traqueo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{skim}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Estancia en UCI}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 149 \\
+Number of columns & 54 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 & hist \\
+\midrule
+\endhead
+Estancia en UCI & 0 & 1 & 34.62 & 15.92 & 4 & 24 & 30 & 44 & 106 &
+▅▇▃▁▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# estado egreso UCI}
+\NormalTok{traqueo}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Estado del egreso  UCI}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Estado del egreso  UCI  n     percent
+##                       0 93 0.624161074
+##                       1 55 0.369127517
+##                       2  1 0.006711409
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# estado egreso hospi}
+\NormalTok{traqueo}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tabyl}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Estado egreso hospitalario}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Estado egreso hospitalario  n     percent
+##                           0 85 0.570469799
+##                           1 60 0.402684564
+##                           2  3 0.020134228
+##                  2 al 14.04  1 0.006711409
+\end{verbatim}
+
+\end{document}

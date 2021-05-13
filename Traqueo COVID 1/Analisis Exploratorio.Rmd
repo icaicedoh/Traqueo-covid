@@ -1,0 +1,230 @@
+---
+title: "01-Analisis Exploratorio"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+##### Abrir librerias ####
+library(dplyr) ### Es una libreria para la gestion de datos
+library(skimr) ### Descripcion de datos continuos
+library(janitor) ### Descripcion de datos cualitativos
+library(readxl) ### Leer el excel de la base de datos
+library(ggplot2) ### Para hacer dibujos bonitos
+
+
+#### Cargar la base de datos
+traqueo <- read_excel("Data/Base Datos TRAQUEO analisis.xlsx", 
+                                          sheet = "Hoja1")
+
+#### Limpiar la base de datos
+traqueo <- traqueo %>%
+  filter(Sexo >= 0)
+
+
+##### Analisis exploratorio
+
+#### Variables CUALITATIVAS
+### Se describen como frecuencias absolutas y relativas = n (%)
+traqueo %>%
+  tabyl(Sexo)
+
+
+##### Variables CUANTITATIVAS
+#### Se describen como media o mediana y desviacion estandar o rango intercuartil 
+traqueo %>%
+  skim(Edad)
+
+###3 Talla
+traqueo$Talla <- as.numeric(traqueo$Talla)
+
+traqueo %>%
+  skim(Talla)
+### Peso
+traqueo$Peso <- as.numeric(traqueo$Peso)
+
+traqueo %>%
+  skim(Peso)
+
+traqueo %>%
+  tabyl(`Ant. HTA`)
+
+### obesidad
+traqueo %>%
+  tabyl(`Ant. Obesidad`)
+
+traqueo$`Ant. Obesidad`[traqueo$`Ant. Obesidad` == "NA"] <- 0
+class(traqueo$`Ant. Obesidad`)
+### DM
+traqueo %>%
+  tabyl(`Ant. DM`)
+
+### EPOC
+traqueo %>%
+  tabyl(`Ant. EPOC/Asma`)
+
+### Tabaquismo
+traqueo%>%
+  tabyl(Tabaquismo)
+
+### severidad APACHE
+traqueo %>%
+  skim(`Grado de severidad`)
+
+### IMC
+traqueo$IMC <- as.numeric(traqueo$IMC)
+
+traqueo %>%
+  skim(IMC)
+
+###sato2 al ingreso
+traqueo %>%
+  skim(`SO2 al ingreso`)
+
+### sofa en intubacion
+traqueo$`SOFA día intubación` <-as.numeric(traqueo$`SOFA día intubación`)
+traqueo %>%
+  skim(`SOFA día intubación`)
+
+### sofa en traqueo
+traqueo %>%
+  skim(`SOFA día traqueostomía`)
+
+### goteo vcasoactivo
+traqueo %>%
+  tabyl(`Goteo de vasoactivos`)
+
+### vasoactivos POP
+traqueo %>%
+  tabyl(`Vasoactivos POP`)
+
+### medicamentos sedacion
+traqueo %>%
+  tabyl(`Medicamentos de sedación`)
+
+### aumento de parametros
+traqueo %>%
+  tabyl(`Aumento de los parámetros ventilatorios`)
+
+### tiempo intub-traqueo
+traqueo$`Tiempo entre la intubación y la traqueostomía` <- as.numeric(traqueo$`Tiempo entre la intubación y la traqueostomía`)
+
+traqueo %>%
+  skim(`Tiempo entre la intubación y la traqueostomía`)
+
+### peep previo
+traqueo %>%
+  skim(`PEEP previo a la traqueostomía`)
+
+### peep posterior
+traqueo %>%
+  skim(`PEEP posterior a la traqueostomía`)
+
+### so2 previo
+traqueo %>%
+  skim(`SO2 previo a la traqueostomía`)
+
+### so2 posterior
+traqueo$`SO2 inmediatamente posterior a la traqueostomía` <- as.numeric(traqueo$`SO2 inmediatamente posterior a la traqueostomía`)
+
+traqueo %>%
+  skim(`SO2 inmediatamente posterior a la traqueostomía`)
+
+### tipo de canula
+traqueo$`Tipo de cánula` <- as.numeric(traqueo$`Tipo de cánula`)
+
+traqueo %>%
+  tabyl(`Tipo de cánula`)
+
+###tecnica quirurgica
+traqueo %>%
+  tabyl(`Técnica quirúrgica`)
+
+### calibre canula
+traqueo %>%
+  skim(`Calibre de la cánula (French)`)
+
+### metodo de identificacion traquea
+traqueo %>%
+  tabyl(`Método de identificación de la tráquea`)
+
+### complicaciones intraquirurgicas
+traqueo$`Complicaciones intraoperatorias` <- as.numeric(traqueo$`Complicaciones intraoperatorias`)
+
+traqueo %>%
+  tabyl(`Complicaciones intraoperatorias`)
+
+### pafi dia antes
+traqueo %>%
+  skim(`PAFi día anterior a la traqueostomía`)
+
+### pafi dia despues 
+traqueo$`PAFi día posterior a la traqueostomía` <-as.numeric(traqueo$`PAFi día posterior a la traqueostomía`)
+
+traqueo %>%
+  skim(`PAFi día posterior a la traqueostomía`)
+
+### pafi 3 dias
+traqueo %>%
+  tabyl(`PAFi a las 72 posteriores a la traqueostomía`)
+
+### fallece antes retiro ventilador
+traqueo$`Fallece antes de retiro del ventilador` <- as.numeric(traqueo$`Fallece antes de retiro del ventilador`)
+
+traqueo %>%
+  tabyl(`Fallece antes de retiro del ventilador`)
+
+### aun continua canula
+traqueo%>%
+  tabyl(`Aún continúa con cánula de traqueostomía`)
+
+
+### tiempo que continua con canula
+traqueo%>%
+  tabyl(`Tiempo que continúa con la cánula de traqueostomía`)
+
+### fallece antes de decanulacion
+traqueo%>%
+  tabyl(`Fallece antes de decanulación`)
+
+### tiempo traqueo-retiro ventilador
+traqueo$`Tiempo entre la traqueostomía y el retiro del ventilador` <-as.numeric(traqueo$`Tiempo entre la traqueostomía y el retiro del ventilador`)
+
+traqueo %>%
+  skim(`Tiempo entre la traqueostomía y el retiro del ventilador`)
+
+### tiempo traqueostomia-decanulacion
+traqueo$`Tiempo entre la traqueostomía y la decanulación` <- as.numeric(traqueo$`Tiempo entre la traqueostomía y la decanulación`)
+
+traqueo %>%
+  skim(`Tiempo entre la traqueostomía y la decanulación`)
+
+### complicaciones estancia hospitalaria
+traqueo %>%
+  tabyl(`Complicaciones a largo plazo`)
+
+###estancia global
+traqueo$`Estancia global` <- as.numeric(traqueo$`Estancia global`)
+traqueo %>%
+  skim(`Estancia global`)
+
+###estancia en UCI
+traqueo %>%
+  skim(`Estancia en UCI`)
+
+### estado egreso UCI
+traqueo%>%
+  tabyl(`Estado del egreso  UCI`)
+
+### estado egreso hospi
+traqueo%>%
+  tabyl(`Estado egreso hospitalario`)
+
+
+
+```
+
